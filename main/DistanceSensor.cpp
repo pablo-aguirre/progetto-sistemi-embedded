@@ -1,9 +1,9 @@
 #include "DistanceSensor.h"
 #include <Arduino.h>
 
-DistanceSensor::Ultrasonic(int triggerPin, int echoPin) {
-  triggerPin = triggerPin;
-  echoPin = echoPin;
+DistanceSensor::DistanceSensor(int triggerPin, int echoPin) {
+  this -> triggerPin = triggerPin;
+  this -> echoPin = echoPin;
 }
 
 void DistanceSensor::begin() {
@@ -20,7 +20,7 @@ float DistanceSensor::getDistance() {
 
   unsigned long duration = pulseIn(echoPin, HIGH);
   float distance = duration * 0.0343 / 2;
-  return distance;
+  return (distance > 400 || distance < 2) ? NULL : distance;
 }
 
 bool DistanceSensor::isObjectDetected(float thresholdDistance) {
