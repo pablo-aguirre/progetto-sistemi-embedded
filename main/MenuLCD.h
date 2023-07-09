@@ -1,6 +1,6 @@
 #ifndef MENULCD_H
 #define MENULCD_H
-#include <LiquidCrystal.h>
+#include <LiquidCrystal_I2C.h>
 
 struct MenuItem {
   int id;
@@ -15,7 +15,7 @@ struct MenuItem {
 
 class MenuLCD {
 private:
-  LiquidCrystal* lcd;
+  LiquidCrystal_I2C* lcd;
   MenuItem* menuItems;
   int numItems;
   int selectedItem;
@@ -29,7 +29,7 @@ public:
     * @param items la lista delle voci del menu
     * @param nItems numero di voci del menu
   */
-  MenuLCD(LiquidCrystal* lcd, MenuItem* items, int nItems);
+  MenuLCD(LiquidCrystal_I2C* lcd, MenuItem* items, int nItems);
   
   /**
    * @brief Inizializza il menu.

@@ -1,6 +1,6 @@
 #include "MenuLCD.h"
 
-MenuLCD::MenuLCD(LiquidCrystal* lcd, MenuItem* menuItems, int nItems) {
+MenuLCD::MenuLCD(LiquidCrystal_I2C* lcd, MenuItem* menuItems, int nItems) {
   this->lcd = lcd;
   this->menuItems = menuItems;
   this->numItems = nItems;
@@ -10,7 +10,8 @@ MenuLCD::MenuLCD(LiquidCrystal* lcd, MenuItem* menuItems, int nItems) {
 }
 
 void MenuLCD::begin() {
-  lcd->begin(16, 2);
+  lcd->init();
+  lcd->backlight();
   print();
 }
 
