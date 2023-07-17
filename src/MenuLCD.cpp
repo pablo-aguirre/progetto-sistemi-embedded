@@ -1,5 +1,6 @@
 #include "MenuLCD.h"
 
+// MenuLCD::MenuLCD(LiquidCrystal *lcd, MenuItem* menuItems, int nItems) {
 MenuLCD::MenuLCD(LiquidCrystal_I2C* lcd, MenuItem* menuItems, int nItems) {
   this->lcd = lcd;
   this->menuItems = menuItems;
@@ -10,8 +11,10 @@ MenuLCD::MenuLCD(LiquidCrystal_I2C* lcd, MenuItem* menuItems, int nItems) {
 }
 
 void MenuLCD::begin() {
+  // lcd->begin(16, 2);
   lcd->init();
   lcd->backlight();
+  // lcd->noBacklight();
   print();
 }
 
@@ -19,16 +22,20 @@ void MenuLCD::print() {
   lcd->clear();
   lcd->setCursor(0, 0);
   if (alertMode) {
-    lcd->print("ALERT");
+    lcd->print("Attenzione:");
     lcd->setCursor(0, 1);
     lcd->print(alertMessage);
   } else {
     lcd->print(editMode ? " " : ">");
-    lcd->print(menuItems[selectedItem].label);
+    lcd->print(menuItems[selectedItem].getLabel());
     lcd->setCursor(0, 1);
     lcd->print(editMode ? ">" : " ");
-    lcd->print(String(menuItems[selectedItem].value) + " " + menuItems[selectedItem].measure);
+    lcd->print(menuItems[selectedItem].getValue(true));
   }
+}
+
+int MenuLCD::getSelectedItem() {
+  return selectedItem;
 }
 
 void MenuLCD::next() {
@@ -38,6 +45,7 @@ void MenuLCD::next() {
     encreaseValue();
   else
     selectNextItem();
+  print();
 }
 
 void MenuLCD::previous() {
@@ -47,13 +55,19 @@ void MenuLCD::previous() {
     decreaseValue();
   else
     selectPreviousItem();
+  print();
 }
 
 void MenuLCD::confirm() {
   if (alertMode)
     alertMode = false;
-  else 
+  else if (editMode)
+    editMode = false;
+  else if (menuItems[selectedItem].isModificable()) {
     setEditMode();
+  } else {
+    setAlertMode("Non modificabile!");
+  }
   print();
 }
 
@@ -68,35 +82,32 @@ void MenuLCD::selectPreviousItem() {
 }
 
 void MenuLCD::setEditMode() {
-  if (menuItems[selectedItem].modificable)
-    this->editMode = !this->editMode;
+  if (menuItems[selectedItem].isModificable())
+    this->editMode = true;
 }
 
-void MenuLCD::modifyValue(float value) {
-  if (menuItems[selectedItem].modificable) {
-    menuItems[selectedItem].value = value;
+void MenuLCD::modifyValue(int value) {
+  if (menuItems[selectedItem].isModificable()) {
+    menuItems[selectedItem].setValue(value);
     print();
   }
 }
 
 void MenuLCD::encreaseValue() {
-  if (menuItems[selectedItem].value + menuItems[selectedItem].increment <= menuItems[selectedItem].max) {
-    modifyValue(menuItems[selectedItem].value + menuItems[selectedItem].increment);
-  } else {
-    modifyValue(menuItems[selectedItem].min);
-  }
+  modifyValue(menuItems[selectedItem].getValue(false).toInt() + 1);
 }
 
 void MenuLCD::decreaseValue() {
-  if (menuItems[selectedItem].value - menuItems[selectedItem].increment >= menuItems[selectedItem].min) {
-    modifyValue(menuItems[selectedItem].value - menuItems[selectedItem].increment);
-  } else {
-    modifyValue(menuItems[selectedItem].max);
-  }
+  if (menuItems[selectedItem].getValue(false).toInt() > 0)
+    modifyValue(menuItems[selectedItem].getValue(false).toInt() - 1);
 }
 
 void MenuLCD::setAlertMode(String message) {
   alertMode = true;
   alertMessage = message;
   print();
+}
+
+bool MenuLCD::isAlertMode() {
+  return alertMode;
 }

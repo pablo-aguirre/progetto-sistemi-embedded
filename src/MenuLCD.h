@@ -1,21 +1,14 @@
 #ifndef MENULCD_H
 #define MENULCD_H
+// #include <LiquidCrystal.h>
 #include <LiquidCrystal_I2C.h>
-
-struct MenuItem {
-  int id;
-  String label;
-  bool modificable;
-  float value;
-  float min;
-  float max;
-  float increment;
-  String measure;
-};
+#include "MenuItem.h"
+#include <Wire.h>
 
 class MenuLCD {
 private:
   LiquidCrystal_I2C* lcd;
+  // LiquidCrystal *lcd;
   MenuItem* menuItems;
   int numItems;
   int selectedItem;
@@ -30,7 +23,8 @@ public:
     * @param nItems numero di voci del menu
   */
   MenuLCD(LiquidCrystal_I2C* lcd, MenuItem* items, int nItems);
-  
+  // MenuLCD(LiquidCrystal *lcd, MenuItem* items, int nItems);
+
   /**
    * @brief Inizializza il menu.
    */
@@ -40,6 +34,11 @@ public:
    * @brief Stampa il menu a seconda dello stato.
    */
   void print();
+
+  /**
+   * @brief Restituisce la voce del menu selezionata.
+   */
+  int getSelectedItem();
 
   /**
    * @brief Mostra a schermo la prossima voce / valore del menu.
@@ -68,7 +67,7 @@ public:
   /**
    * @brief Modifica la voce del menu selezionata.
    */
-  void modifyValue(float value);
+  void modifyValue(int value);
 
   /**
    * @brief Incrementa il valore della voce del menu selezionata.
@@ -91,5 +90,10 @@ public:
    * @brief Imposta/resetta la modalità di modifica.
    */
   void setEditMode();
+
+  /**
+   * @brief Restituisce true se il menu è in modalità di alert.
+   */
+  bool isAlertMode();
 };
 #endif
