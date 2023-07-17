@@ -19,3 +19,15 @@ Il progetto consiste in un refiller d'acqua automatico (pensato per essere usato
 - 1 sensore capacitivo per l'acqua
 - 1 pompa acqua da immersione
 - 1 tubo da 1m
+- 1 buzzer
+- 1 sensore ad ultrasuoni HC-SR04
+- 2 resistenze da 220 $\Omega$
+- 1 porta batterie AA
+- 1 breadboard
+- 2 batterie AA
+- 1 batteria a $9\text V$
+
+  
+## Circuito
+![](circuito.jpg)
+---
