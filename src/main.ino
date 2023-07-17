@@ -1,7 +1,7 @@
 #include <TaskScheduler.h>
 #include <LiquidCrystal_I2C.h>
 // #include <LiquidCrystal.h>
-#include <EEPROM.h>
+// #include <EEPROM.h>
 #include "HC_SR04.h"
 #include "MenuLCD.h"
 #include "MenuItem.h"

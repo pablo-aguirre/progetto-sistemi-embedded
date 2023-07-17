@@ -25,9 +25,14 @@ Il progetto consiste in un refiller d'acqua automatico (pensato per essere usato
 - 1 porta batterie AA
 - 1 breadboard
 - 2 batterie AA
-- 1 batteria a $9\text V$
+- 1 batteria a 9V
 
   
-## Circuito
+## Librerie aggiuntive
+- [TaskScheduler](https://github.com/arkhipenko/TaskScheduler)
+- [LiquidCrystal_I2C](https://github.com/johnrickman/LiquidCrystal_I2C)
+- [HC_SR04](https://github.com/bjoernboeckle/HC_SR04)
+
+ ## Circuito
 ![](circuito.jpg)
 ---
