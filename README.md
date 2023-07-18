@@ -35,4 +35,10 @@ Il progetto consiste in un refiller d'acqua automatico (pensato per essere usato
 
  ## Circuito
 ![](circuito.jpg)
+
+## Fotografie
+- __Fronte__
+  ![](/progetto/img/fronte.jpeg)
+- __Dall'alto__
+  ![](/progetto/img/alto.jpeg)
 ---
